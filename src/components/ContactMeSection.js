@@ -21,6 +21,16 @@ const LandingSection = () => {
     const {isLoading, response, submit} = useSubmit();
     const {onOpen} = useAlertContext();
 
+    React.useEffect(() => {
+        if (response) {
+            onOpen(response.type, response.message);
+
+            if (response.type === "success") {
+                formik.resetForm();
+            }
+        }
+    }, [response]);
+
     const formik = useFormik({
         initialValues: {
             firstName: "",
@@ -29,13 +39,7 @@ const LandingSection = () => {
             comment: ""
         },
         onSubmit: (values) => {
-            submit("https://localhost:3000/not/used/anyway", values).then(() => {
-                onOpen(response.type, response.message);
-
-                if (response.type === "success") {
-                    formik.resetForm();
-                }
-            });
+            submit("https://localhost:3000/not/used/anyway", values);
         },
         validationSchema: Yup.object({
             firstName: Yup.string().required("Required"),
