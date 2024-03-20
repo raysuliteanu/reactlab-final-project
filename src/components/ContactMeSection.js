@@ -29,7 +29,7 @@ const LandingSection = () => {
             comment: ""
         },
         onSubmit: (values) => {
-            submit("", values).then(r => {
+            submit("https://localhost:3000/not/used/anyway", values).then(() => {
                 onOpen(response.type, response.message);
 
                 if (response.type === "success") {
@@ -40,8 +40,9 @@ const LandingSection = () => {
         validationSchema: Yup.object({
             firstName: Yup.string().required("Required"),
             email: Yup.string().email("Invalid email address").required("Required"),
-            // todo
-            type: Yup.string(),
+            type: Yup.string()
+                .matches(/('hireMe' | 'openSource' | 'other')/, { excludeEmptyString: true })
+                .optional(),
             comment: Yup.string().required("Required").min(25, "Must be at least 25 characters")
         }),
     });
@@ -87,9 +88,7 @@ const LandingSection = () => {
                                 <FormLabel htmlFor="type">Type of enquiry</FormLabel>
                                 <Select id="type" name="type" {...formik.getFieldProps('type')}>
                                     <option value="hireMe">Freelance project proposal</option>
-                                    <option value="openSource">
-                                        Open source consultancy session
-                                    </option>
+                                    <option value="openSource">Open source consultancy session</option>
                                     <option value="other">Other</option>
                                 </Select>
                             </FormControl>
