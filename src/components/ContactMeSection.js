@@ -17,11 +17,11 @@ import FullScreenSection from "./FullScreenSection";
 import useSubmit from "../hooks/useSubmit";
 import {useAlertContext} from "../context/alertContext";
 
-const LandingSection = () => {
+const ContactMeSection = () => {
     const {isLoading, response, submit} = useSubmit();
     const {onOpen} = useAlertContext();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (response) {
             onOpen(response.type, response.message);
 
@@ -60,10 +60,10 @@ const LandingSection = () => {
         >
             <VStack w="1024px" p={32} alignItems="flex-start">
                 <Heading as="h1" id="contactme-section">
-                    Contact me
+                    Contact Me
                 </Heading>
                 <Box p={6} rounded="md" w="100%">
-                    <form onSubmit={formik.handleSubmit}>
+                    <form name="contactme-form" onSubmit={formik.handleSubmit}>
                         <VStack spacing={4}>
                             <FormControl isInvalid={formik.touched.firstName && formik.errors.firstName}>
                                 <FormLabel htmlFor="firstName">Name</FormLabel>
@@ -122,4 +122,4 @@ const LandingSection = () => {
     );
 };
 
-export default LandingSection;
+export default ContactMeSection;
