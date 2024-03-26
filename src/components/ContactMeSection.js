@@ -44,9 +44,7 @@ const ContactMeSection = () => {
         validationSchema: Yup.object({
             firstName: Yup.string().required("Required"),
             email: Yup.string().email("Invalid email address").required("Required"),
-            type: Yup.string()
-                .matches(/('hireMe' | 'openSource' | 'other')/, { excludeEmptyString: true })
-                .optional(),
+            type: Yup.string().optional(),
             comment: Yup.string().required("Required").min(25, "Must be at least 25 characters")
         }),
     });
