@@ -44,10 +44,13 @@ const ContactMeSection = () => {
         validationSchema: Yup.object({
             firstName: Yup.string().required("Required"),
             email: Yup.string().email("Invalid email address").required("Required"),
-            type: Yup.string().optional(),
+            type: Yup.string()
+                .matches(/('hireMe' | 'openSource' | 'other')/)
+                .optional(),
             comment: Yup.string().required("Required").min(25, "Must be at least 25 characters")
         }),
     });
+
 
     return (
         <FullScreenSection
@@ -86,7 +89,7 @@ const ContactMeSection = () => {
                                     {formik.errors.email}
                                 </FormErrorMessage>
                             </FormControl>
-                            <FormControl>
+                            <FormControl isInvalid={formik.touched.type && formik.errors.type}>
                                 <FormLabel htmlFor="type">Type of enquiry</FormLabel>
                                 <Select id="type" name="type" {...formik.getFieldProps('type')}>
                                     <option value="hireMe">Freelance project proposal</option>
@@ -107,7 +110,7 @@ const ContactMeSection = () => {
                                 </FormErrorMessage>
                             </FormControl>
                             <Button type="submit" colorScheme="purple" width="full"
-                                    isDisabled={!formik.isValid}
+                                    disabled={!(formik.isValid && formik.dirty)}
                                     isLoading={isLoading}
                             >
                                 Submit
